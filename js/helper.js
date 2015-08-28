@@ -64,8 +64,8 @@ The International Name challenge in Lesson 2 where you'll create a function that
 */
 $(document).ready(function() {
   $('button').click(function() {
-    var iName = inName() || function(){};
-    $('#name').html(iName);  
+	var iName = inName() || function(){};
+	$('#name').html(iName);
   });
 });
 
@@ -76,10 +76,10 @@ clickLocations = [];
 
 function logClicks(x,y) {
   clickLocations.push(
-    {
-      x: x,
-      y: y
-    }
+	{
+	  x: x,
+	  y: y
+	}
   );
   console.log('x location: ' + x + '; y location: ' + y);
 }
@@ -106,7 +106,7 @@ function initializeMap() {
   var locations;
 
   var mapOptions = {
-    disableDefaultUI: true
+	disableDefaultUI: true
   };
 
   /* 
@@ -122,25 +122,25 @@ function initializeMap() {
   */
   function locationFinder() {
 
-    // initializes an empty array
-    var locations = [];
+	// initializes an empty array
+	var locations = [];
 
-    // adds the single location property from bio to the locations array
-    locations.push(bio.contacts.location);
+	// adds the single location property from bio to the locations array
+	locations.push(bio.contacts.location);
 
-    // iterates through school locations and appends each location to
-    // the locations array
-    for (var school in education.schools) {
-      locations.push(education.schools[school].location);
-    }
+	// iterates through school locations and appends each location to
+	// the locations array
+	for (var school in education.schools) {
+	  locations.push(education.schools[school].location);
+	}
 
-    // iterates through work locations and appends each location to
-    // the locations array
-    for (var job in work.jobs) {
-      locations.push(work.jobs[job].location);
-    }
+	// iterates through work locations and appends each location to
+	// the locations array
+	for (var job in work.jobs) {
+	  locations.push(work.jobs[job].location);
+	}
 
-    return locations;
+	return locations;
   }
 
   /*
@@ -150,38 +150,38 @@ function initializeMap() {
   */
   function createMapMarker(placeData) {
 
-    // The next lines save location data from the search result object to local variables
-    var lat = placeData.geometry.location.lat();  // latitude from the place service
-    var lon = placeData.geometry.location.lng();  // longitude from the place service
-    var name = placeData.formatted_address;   // name of the place from the place service
-    var bounds = window.mapBounds;            // current boundaries of the map window
+	// The next lines save location data from the search result object to local variables
+	var lat = placeData.geometry.location.lat();  // latitude from the place service
+	var lon = placeData.geometry.location.lng();  // longitude from the place service
+	var name = placeData.formatted_address;   // name of the place from the place service
+	var bounds = window.mapBounds;            // current boundaries of the map window
 
-    // marker is an object with additional data about the pin for a single location
-    var marker = new google.maps.Marker({
-      map: map,
-      position: placeData.geometry.location,
-      title: name
-    });
+	// marker is an object with additional data about the pin for a single location
+	var marker = new google.maps.Marker({
+	  map: map,
+	  position: placeData.geometry.location,
+	  title: name
+	});
 
-    // infoWindows are the little helper windows that open when you click
-    // or hover over a pin on a map. They usually contain more information
-    // about a location.
-    var infoWindow = new google.maps.InfoWindow({
-      content: name
-    });
+	// infoWindows are the little helper windows that open when you click
+	// or hover over a pin on a map. They usually contain more information
+	// about a location.
+	var infoWindow = new google.maps.InfoWindow({
+	  content: name
+	});
 
-    // hmmmm, I wonder what this is about...
-    google.maps.event.addListener(marker, 'click', function() {
-      // your code goes here!
-    });
+	// hmmmm, I wonder what this is about...
+	google.maps.event.addListener(marker, 'click', function() {
+	  // your code goes here!
+	});
 
-    // this is where the pin actually gets added to the map.
-    // bounds.extend() takes in a map location object
-    bounds.extend(new google.maps.LatLng(lat, lon));
-    // fit the map to the new marker
-    map.fitBounds(bounds);
-    // center the map
-    map.setCenter(bounds.getCenter());
+	// this is where the pin actually gets added to the map.
+	// bounds.extend() takes in a map location object
+	bounds.extend(new google.maps.LatLng(lat, lon));
+	// fit the map to the new marker
+	map.fitBounds(bounds);
+	// center the map
+	map.setCenter(bounds.getCenter());
   }
 
   /*
@@ -189,9 +189,9 @@ function initializeMap() {
   If so, it creates a new map marker for that location.
   */
   function callback(results, status) {
-    if (status == google.maps.places.PlacesServiceStatus.OK) {
-      createMapMarker(results[0]);
-    }
+	if (status == google.maps.places.PlacesServiceStatus.OK) {
+	  createMapMarker(results[0]);
+	}
   }
 
   /*
@@ -200,22 +200,22 @@ function initializeMap() {
   */
   function pinPoster(locations) {
 
-    // creates a Google place search service object. PlacesService does the work of
-    // actually searching for location data.
-    var service = new google.maps.places.PlacesService(map);
+	// creates a Google place search service object. PlacesService does the work of
+	// actually searching for location data.
+	var service = new google.maps.places.PlacesService(map);
 
-    // Iterates through the array of locations, creates a search object for each location
-    for (var place in locations) {
+	// Iterates through the array of locations, creates a search object for each location
+	for (var place in locations) {
 
-      // the search request object
-      var request = {
-        query: locations[place]
-      };
+	  // the search request object
+	  var request = {
+		query: locations[place]
+	  };
 
-      // Actually searches the Google Maps API for location data and runs the callback
-      // function with the search results after each search.
-      service.textSearch(request, callback);
-    }
+	  // Actually searches the Google Maps API for location data and runs the callback
+	  // function with the search results after each search.
+	  service.textSearch(request, callback);
+	}
   }
 
   // Sets the boundaries of the map based on pin locations
